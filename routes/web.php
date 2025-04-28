@@ -14,9 +14,9 @@ Route::controller(App\Http\Controllers\UserController::class)->group(function(){
 });
 
 Route::get('/admin', function(){
-    return view('admin.dashboard');
+    return view('admin.dashboardAdmin');
 })->middleware(App\Http\Middleware\OnlyAdminMiddleware::class);
 
 Route::get('/author', function(){
-    return view('author.dashboard');
+    return view('author.dashboardAuthor');
 })->middleware(App\Http\Middleware\OnlyAuthorMiddleware::class);
