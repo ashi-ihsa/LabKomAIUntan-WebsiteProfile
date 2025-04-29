@@ -3,14 +3,14 @@
 namespace App\Providers;
 
 use App\Services\AuthorService;
-use App\Services\Impl\UserServiceImpl;
+use App\Services\Impl\AuthorServiceImpl;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 
 class AuthorServiceProvider extends ServiceProvider implements DeferrableProvider
 {
     public array $singletons = [
-        AuthorService::class => UserServiceImpl::class
+        AuthorService::class => AuthorServiceImpl::class
     ];
 
     public function provides(): array

@@ -20,29 +20,38 @@ class AuthorServiceImpl implements AuthorService
     {
         return User::query()
         ->where('role', 'author')
-        ->get(['email', 'name', 'password']) // hanya ambil kolom email, name, password
+        ->get(['id','email', 'name', 'password']) // hanya ambil kolom email, name, password
         ->toArray();
     }
-    function updateAuthor(string $id,string $email, string $name, string $password): void
+    function updateAuthor(string $id,string $email, string $name, ?string $password): void
     {
         $author = User::query()
             ->where('id', $id)
             ->where('role', 'author')
             ->firstOrFail(); // cari author, kalau tidak ketemu 404
 
-        $author->update([
-            'email' => $email,
-            'name' => $name,
-            'password' => Hash::make($password)
-        ]);
+        $author->name = $name;
+        $author->email = $email;
+    
+        if (!empty($password)) {
+            $author->password = Hash::make($password);
+        }
+    
+        $author->save();
     }
     function deleteAuthor(string $id): void
     {
         $author = User::query()
             ->where('id', $id)
             ->where('role', 'author')
-            ->firstOrFail(); // cari author, kalau tidak ketemu 404
-
+            ->firstOrFail();
         $author->delete();
+    }
+    function findById(string $id): array
+    {
+        return User::query()
+            ->where('id', $id)
+            ->where('role', 'author')
+            ->firstOrFail()->toArray();
     }
 }

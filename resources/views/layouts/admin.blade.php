@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Admin Panel')</title>
+    <title>{{$title}}</title>
 
     <!-- ======= Styles ====== -->
     <link rel="stylesheet" href="{{ asset('css/sidebarAdmin.css') }}">
@@ -19,15 +19,27 @@
     <div class="container">
         @include('partials.sidebarAdmin')
         <div class="main">
+
+            @if(isset($error))
+                <div style="color: red; margin-bottom: 10px;">
+                    {{ $error }}
+                </div>
+            @endif
+
             <div class="topbar">
                 <div class="toggle">
                     <ion-icon name="menu-outline"></ion-icon>
                 </div>
             </div>
-
-            <div class="content">
-                @yield('content')
+            
+            <div class="cardBox">
+                <div class="card">
+                    <div>
+                        <div class="cardName">{{$title}}</div>
+                    </div>
+                </div>
             </div>
+            @yield('content')
         </div>
     </div>
 

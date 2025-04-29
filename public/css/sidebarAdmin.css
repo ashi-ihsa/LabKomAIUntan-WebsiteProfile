@@ -30,7 +30,7 @@ body {
 /* =============== Navigation ================ */
 .navigation {
   position: fixed;
-  width: 300px;
+  width: 200px;
   height: 100%;
   background: var(--blue);
   border-left: 10px solid var(--blue);
@@ -132,8 +132,8 @@ body {
 /* ===================== Main ===================== */
 .main {
   position: absolute;
-  width: calc(100% - 300px);
-  left: 300px;
+  width: calc(100% - 200px);
+  left: 200px;
   min-height: 100vh;
   background: var(--white);
   transition: 0.5s;
@@ -216,7 +216,7 @@ body {
   width: 100%;
   padding: 20px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   grid-gap: 30px;
 }
 
@@ -239,7 +239,7 @@ body {
 }
 
 .cardBox .card .cardName {
-  color: var(--black2);
+  color: var(--black1);
   font-size: 1.1rem;
   margin-top: 5px;
 }

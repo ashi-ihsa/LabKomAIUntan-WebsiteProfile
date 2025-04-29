@@ -7,4 +7,5 @@ interface AuthorService
     function getAuthor(): array;
     function updateAuthor(string $id,string $email, string $name, string $password): void;
     function deleteAuthor(string $id): void;
+    function findById(string $id): array;
 }

@@ -12,7 +12,7 @@ class DashboardController extends Controller
         if ($request->session()->exists('user')) {
             $role = $request->session()->get('role');
             if ($role === 'admin') {
-                return redirect('/admin');
+                return redirect('/admin/author');
             } elseif ($role === 'author') {
                 return redirect('/author');
             } else {

@@ -43,7 +43,7 @@ class UserController extends Controller
             request()->session()->put("role", $role);
 
             if ($role === 'admin') {
-                return redirect('/admin');
+                return redirect('/admin/author');
             } elseif ($role === 'author') {
                 return redirect('/author');
             }
