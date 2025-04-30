@@ -20,7 +20,7 @@ class AuthorController extends Controller
     {
         $authorData = $this->authorService->getAuthor();
         return response()
-        -> view("admin.authorDashboard",[
+        -> view("admin.author",[
             "title" => "Author Management",
             "authorData" => $authorData
         ]);
@@ -35,7 +35,7 @@ class AuthorController extends Controller
         if(empty($name) || empty($email) || empty($password))
         {
             $authorData = $this->authorService->getAuthor();
-            return response()->view('admin.authorDashboard',[
+            return response()->view('admin.author',[
                 "title" => "Author Management",
                 "authorData" => $authorData,
                 'error' => "All data are Required"
@@ -49,7 +49,7 @@ class AuthorController extends Controller
     {
 
         $author = $this->authorService->findById($id);
-        return view('admin.editAuthorDashboard', [
+        return view('admin.author_edit', [
             'author' => $author,
             'title' => 'Edit Author'
         ]);
@@ -64,7 +64,7 @@ class AuthorController extends Controller
         if(empty($name) || empty($email))
         {
             $authorData = $this->authorService->getAuthor();
-            return response()->view('admin.editAuthorDashboard',[
+            return response()->view('admin.editAuthor',[
                 "title" => "Edit Author",
                 "authorData" => $authorData,
                 'error' => "All data are Required"

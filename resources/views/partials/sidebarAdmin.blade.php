@@ -10,11 +10,11 @@
         </li>
 
         <li>
-            <a href="#">
+            <a href="/admin/tentang">
                 <span class="icon">
-                    <ion-icon name="home-outline"></ion-icon>
+                    <ion-icon name="information-circle-outline"></ion-icon>
                 </span>
-                <span class="title">Dashboard</span>
+                <span class="title">Tentang</span>
             </a>
         </li>
 
@@ -55,7 +55,7 @@
         </li>
 
         <li>
-            <a href="#">
+            <a href="/admin/author">
                 <span class="icon">
                     <ion-icon name="people-outline"></ion-icon>
                 </span>
