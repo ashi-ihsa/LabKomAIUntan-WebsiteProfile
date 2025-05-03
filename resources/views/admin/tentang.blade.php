@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<form method="post" action="/admin/tentang/save">
+<form method="post" action="{{route('admin.tentang.save')}}">
     @csrf
     <textarea id="summernote" name="content">{!! $content !!}</textarea>
     <input type="submit" value="Update">

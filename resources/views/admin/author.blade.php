@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<form method="POST" action="/admin/author/create">
+<form method="POST" action="{{ route('admin.author.create')}}">
         @csrf
         <div style="margin-bottom: 10px;">
             <label for="name">Nama:</label><br>
@@ -38,13 +38,13 @@
                     <th scope="row">{{$author['id']}}</th>
                     <td>{{$author['name']}}</td>
                     <td>
-                        <form action="/admin/author/{{$author['id']}}/delete" method="post">
+                        <form action="{{ route('admin.author.delete', ['id' => $author['id']]) }}" method="post">
                             @csrf
                             <button class="w-100 btn btn-lg btn-danger" type="submit">Remove</button>
                         </form>
                     </td>
                     <td>
-                    <form action="/admin/author/{{ $author['id'] }}" method="GET">
+                    <form action="{{ route('admin.author.edit', ['id' => $author['id']]) }}" method="GET">
                         @csrf
                         <button type="submit" class="btn btn-warning w-100">Edit</button>
                     </form>

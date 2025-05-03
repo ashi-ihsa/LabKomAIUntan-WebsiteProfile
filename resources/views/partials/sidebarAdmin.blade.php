@@ -10,7 +10,7 @@
         </li>
 
         <li>
-            <a href="/admin/tentang">
+            <a href={{route('admin.tentang.index')}}>
                 <span class="icon">
                     <ion-icon name="information-circle-outline"></ion-icon>
                 </span>
@@ -55,7 +55,7 @@
         </li>
 
         <li>
-            <a href="/admin/author">
+            <a href="{{route('admin.author.index')}}">
                 <span class="icon">
                     <ion-icon name="people-outline"></ion-icon>
                 </span>
@@ -72,7 +72,7 @@
                 <span class="title">Sign Out</span>
             </a>
 
-            <form id="logout-form" action="/doLogout" method="POST" style="display: none;">
+            <form id="logout-form" action="{{route('doLogout')}}" method="POST" style="display: none;">
                 @csrf
             </form>
         </li>

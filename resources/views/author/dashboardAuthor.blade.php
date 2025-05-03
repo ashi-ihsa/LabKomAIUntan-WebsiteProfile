@@ -7,6 +7,6 @@
     <span class="title">Sign Out</span>
 </a>
 
-<form id="logout-form" action="/doLogout" method="POST" style="display: none;">
+<form id="logout-form" action="{{route('doLogout')}}" method="POST" style="display: none;">
     @csrf
 </form>

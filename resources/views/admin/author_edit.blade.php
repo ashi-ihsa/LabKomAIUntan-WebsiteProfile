@@ -4,7 +4,7 @@
         {{ $error }}
     </div>
 @endif
-<form action="/admin/author/{{$author['id']}}/update" method="POST">
+<form action="{{ route('admin.author.update', ['id' => $author['id']]) }}" method="POST">
     @csrf
     <input type="hidden" name="id" value="{{ $author['id'] }}">
     

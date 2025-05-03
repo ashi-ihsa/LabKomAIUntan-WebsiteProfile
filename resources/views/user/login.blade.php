@@ -19,7 +19,7 @@
     </div>
 @endif
 
-<form class="p-4 p-md-5 border rounded-3 bg-light" method="post" action="/doLogin">
+<form class="p-4 p-md-5 border rounded-3 bg-light" method="post" action="{{ route('doLogin') }}">
 <input type="hidden" name="_token" value="{{csrf_token()}}">
 <div class="form-floating mb-3">
     <input name="user" type="text" class="form-control" id="user" placeholder="id">
