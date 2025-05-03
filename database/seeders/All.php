@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class AdminSeeder extends Seeder
@@ -19,6 +20,17 @@ class AdminSeeder extends Seeder
             'email' => 'admin@example.com',
             'password' => Hash::make('password123'),
             'role' => 'admin',
+        ]);
+
+        User::create([
+            'name' => 'author',
+            'email' => 'author@example.com',
+            'password' => Hash::make('password123'),
+            'role' => 'author',
+        ]);
+
+        DB::table('tentang')->insert([
+            'content' => '<p>Selamat datang di halaman tentang kami.</p>',
         ]);
     }
 }

@@ -18,6 +18,14 @@ Route::controller(App\Http\Controllers\TentangController::class)
     Route::post('admin/tentang/save', 'saveTentang')->name('admin.tentang.save');
 });
 
+Route::controller(App\Http\Controllers\TagController::class)
+    ->middleware(App\Http\Middleware\OnlyAdminMiddleware::class)->group(function(){
+    Route::get('/admin/tag', 'index')->name('admin.tag.index');
+    Route::post('/admin/tag/create', 'createTag')->name('admin.tag.create');
+    Route::post('/admin/tag/{id}/update', 'editTag')->name('admin.tag.edit');
+    Route::post('/admin/tag/{id}/delete', 'deletetag')->name('admin.tag.delete');
+});
+
 Route::controller(App\Http\Controllers\AuthorController::class)
     ->middleware(App\Http\Middleware\OnlyAdminMiddleware::class)->group(function(){
     Route::get('/admin/author', 'index')->name('admin.author.index');

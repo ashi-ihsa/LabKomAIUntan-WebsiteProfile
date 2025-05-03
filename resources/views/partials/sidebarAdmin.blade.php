@@ -10,7 +10,7 @@
         </li>
 
         <li>
-            <a href={{route('admin.tentang.index')}}>
+            <a href="{{ route('admin.tentang.index') }}">
                 <span class="icon">
                     <ion-icon name="information-circle-outline"></ion-icon>
                 </span>
@@ -19,11 +19,11 @@
         </li>
 
         <li>
-            <a href="#">
+            <a href="{{route('admin.tag.index')}}">
                 <span class="icon">
                     <ion-icon name="people-outline"></ion-icon>
                 </span>
-                <span class="title">Customers</span>
+                <span class="title">Tag</span>
             </a>
         </li>
 
