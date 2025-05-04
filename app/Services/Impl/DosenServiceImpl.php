@@ -10,11 +10,11 @@ use Illuminate\Support\Str;
 
 class DosenServiceImpl implements DosenService
 {
-    private function extractImagePathsFromHtmlDosen(string $html, string $id): array
+    private function extractImagePathsFromHtmlDosen(?string $html, string $id): array
     {
         $dom = new \DomDocument();
         libxml_use_internal_errors(true);
-        $dom->loadHTML($html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $dom->loadHTML($html ?: '<div></div>', LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         $images = $dom->getElementsByTagName('img');
 
         $paths = [];
@@ -64,7 +64,7 @@ class DosenServiceImpl implements DosenService
         return Dosen::findOrFail($id)->toArray();
     }
 
-    public function saveDosenWithCleanup(string $id, string $newContent): string
+    public function saveDosenWithCleanup(string $id, ?string $newContent): string
     {
         $dosen = Dosen::findOrFail($id);
         $oldContent = $dosen->content ?? '';
@@ -82,7 +82,7 @@ class DosenServiceImpl implements DosenService
 
         $dom = new \DomDocument();
         libxml_use_internal_errors(true);
-        $dom->loadHtml($newContent, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $dom->loadHtml($newContent?: '<div></div>', LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         $images = $dom->getElementsByTagName('img');
         $today = date('Y-m-d');
 
@@ -108,7 +108,7 @@ class DosenServiceImpl implements DosenService
         return $finalContent;
     }
 
-    public function updateDosen(string $id, ?UploadedFile $image, string $nama, string $deskripsi, string $content): void
+    public function updateDosen(string $id, ?UploadedFile $image, string $nama, string $deskripsi, ?string $content): void
     {
         $dosen = Dosen::findOrFail($id);
 
@@ -150,8 +150,9 @@ class DosenServiceImpl implements DosenService
     {
         $dosen = Dosen::findOrFail($id);
 
-        if ($dosen->image) {
-            Storage::disk('public')->delete($dosen->image);
+        $folderPath = "dosen/$id";
+        if (Storage::disk('public')->exists($folderPath)) {
+            Storage::disk('public')->deleteDirectory($folderPath);
         }
 
         $dosen->delete();
