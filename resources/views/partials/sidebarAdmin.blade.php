@@ -28,11 +28,11 @@
         </li>
 
         <li>
-            <a href="#">
+            <a href="{{route('admin.dosen.index')}}">
                 <span class="icon">
                     <ion-icon name="chatbubble-outline"></ion-icon>
                 </span>
-                <span class="title">Messages</span>
+                <span class="title">Dosen</span>
             </a>
         </li>
 

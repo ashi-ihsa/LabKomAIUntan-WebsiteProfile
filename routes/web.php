@@ -26,6 +26,15 @@ Route::controller(App\Http\Controllers\TagController::class)
     Route::post('/admin/tag/{id}/delete', 'deletetag')->name('admin.tag.delete');
 });
 
+Route::controller(App\Http\Controllers\DosenController::class)
+    ->middleware(App\Http\Middleware\OnlyAdminMiddleware::class)->group(function(){
+    Route::get('/admin/dosen', 'index')->name('admin.dosen.index');
+    Route::post('/admin/dosen/create', 'createDosen')->name('admin.dosen.create');
+    Route::post('/admin/dosen/{id}/delete', 'deleteDosen')->name('admin.dosen.delete');
+    Route::get('/admin/dosen/{id}', 'editDosenById')->name('admin.dosen.edit');
+    Route::post('/admin/dosen/{id}/update', 'updateDosen')->name('admin.dosen.update');
+});
+
 Route::controller(App\Http\Controllers\AuthorController::class)
     ->middleware(App\Http\Middleware\OnlyAdminMiddleware::class)->group(function(){
     Route::get('/admin/author', 'index')->name('admin.author.index');

@@ -4,5 +4,5 @@ namespace App\Services;
 interface TentangService
 {
     function showTentang(): ?string;
-    function saveTentang(string $content): void;
+    public function saveTentangWithCleanup(string $newContent): void;
 }
