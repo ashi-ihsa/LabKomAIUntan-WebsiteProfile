@@ -59,6 +59,14 @@ class DosenServiceImpl implements DosenService
         return Dosen::all()->toArray();
     }
 
+    public function getDosenOnlyIdAndName():array
+    {
+        return Dosen::query()
+            ->select('id', 'nama')
+            ->get()
+            ->toArray();
+    }
+
     public function findById(string $id): array
     {
         return Dosen::findOrFail($id)->toArray();

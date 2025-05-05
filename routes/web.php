@@ -26,6 +26,17 @@ Route::controller(App\Http\Controllers\TagController::class)
     Route::post('/admin/tag/{id}/delete', 'deletetag')->name('admin.tag.delete');
 });
 
+Route::controller(App\Http\Controllers\PublikasiController::class)
+    ->middleware(App\Http\Middleware\OnlyAdminMiddleware::class)->group(function(){
+    Route::get('/admin/publikasi', 'index')->name('admin.publikasi.index');
+    Route::post('/admin/publikasi/create', 'createPublikasi')->name('admin.publikasi.create');
+    Route::post('/admin/publikasi/{id}/delete', 'deletePublikasi')->name('admin.publikasi.delete');
+    Route::get('/admin/publikasi/{id}', 'editPublikasiById')->name('admin.publikasi.edit');
+    Route::post('/admin/publikasi/{id}/update', 'updatePublikasi')->name('admin.publikasi.update');
+    Route::post('/admin/publikasi/{id}/publish', 'setPublishStatus')->name('admin.publikasi.publish');
+    Route::post('/admin/publikasi/{id}/highlight','setHighlightStatus')->name('admin.publikasi.highlight');
+});
+
 Route::controller(App\Http\Controllers\DosenController::class)
     ->middleware(App\Http\Middleware\OnlyAdminMiddleware::class)->group(function(){
     Route::get('/admin/dosen', 'index')->name('admin.dosen.index');
