@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
+/* ====================== Login ========================== */
 Route::get('/login', [App\Http\Controllers\DashboardController::class, 'home']);
 Route::controller(App\Http\Controllers\UserController::class)->group(function(){
     Route::get('/login', 'login')->name('login');
@@ -12,20 +12,27 @@ Route::controller(App\Http\Controllers\UserController::class)->group(function(){
     Route::post('/doLogout', 'doLogout')->name('doLogout');
 });
 
-Route::controller(App\Http\Controllers\TentangController::class)
+/* ====================== Admin ========================== */
+/* ==== Dosen Management ==== */
+Route::controller(App\Http\Controllers\DosenController::class)
     ->middleware(App\Http\Middleware\OnlyAdminMiddleware::class)->group(function(){
-    Route::get('/admin/tentang','index')->name('admin.tentang.index');
-    Route::post('admin/tentang/save', 'saveTentang')->name('admin.tentang.save');
+    Route::get('/admin/dosen', 'index')->name('admin.dosen.index');
+    Route::post('/admin/dosen/create', 'createDosen')->name('admin.dosen.create');
+    Route::post('/admin/dosen/{id}/delete', 'deleteDosen')->name('admin.dosen.delete');
+    Route::get('/admin/dosen/{id}', 'editDosenById')->name('admin.dosen.edit');
+    Route::post('/admin/dosen/{id}/update', 'updateDosen')->name('admin.dosen.update');
 });
-
-Route::controller(App\Http\Controllers\TagController::class)
-    ->middleware(App\Http\Middleware\OnlyAdminMiddleware::class)->group(function(){
-    Route::get('/admin/tag', 'index')->name('admin.tag.index');
-    Route::post('/admin/tag/create', 'createTag')->name('admin.tag.create');
-    Route::post('/admin/tag/{id}/update', 'editTag')->name('admin.tag.edit');
-    Route::post('/admin/tag/{id}/delete', 'deletetag')->name('admin.tag.delete');
-});
-
+/* ==== Tag Management ==== 
+ * Not Yet Implements
+*/
+// Route::controller(App\Http\Controllers\TagController::class)
+//     ->middleware(App\Http\Middleware\OnlyAdminMiddleware::class)->group(function(){
+//     Route::get('/admin/tag', 'index')->name('admin.tag.index');
+//     Route::post('/admin/tag/create', 'createTag')->name('admin.tag.create');
+//     Route::post('/admin/tag/{id}/update', 'editTag')->name('admin.tag.edit');
+//     Route::post('/admin/tag/{id}/delete', 'deletetag')->name('admin.tag.delete');
+// });
+/* ==== Publikasi Management ==== */
 Route::controller(App\Http\Controllers\PublikasiController::class)
     ->middleware(App\Http\Middleware\OnlyAdminMiddleware::class)->group(function(){
     Route::get('/admin/publikasi', 'index')->name('admin.publikasi.index');
@@ -36,17 +43,7 @@ Route::controller(App\Http\Controllers\PublikasiController::class)
     Route::post('/admin/publikasi/{id}/publish', 'setPublishStatus')->name('admin.publikasi.publish');
     Route::post('/admin/publikasi/{id}/highlight','setHighlightStatus')->name('admin.publikasi.highlight');
 });
-
-Route::controller(App\Http\Controllers\KerjasamaController::class)
-    ->middleware(App\Http\Middleware\OnlyAdminMiddleware::class)->group(function(){
-    Route::get('/admin/kerjasama', 'index')->name('admin.kerjasama.index');
-    Route::post('/admin/kerjasama/create', 'createKerjasama')->name('admin.kerjasama.create');
-    Route::post('/admin/kerjasama/{id}/delete', 'deleteKerjasama')->name('admin.kerjasama.delete');
-    Route::get('/admin/kerjasama/{id}', 'editKerjasamaById')->name('admin.kerjasama.edit');
-    Route::post('/admin/kerjasama/{id}/update', 'updateKerjasama')->name('admin.kerjasama.update');
-    Route::post('/admin/kerjasama/{id}/publish', 'setPublishStatus')->name('admin.kerjasama.publish');
-});
-
+/* ==== Artikel Management ==== */
 Route::controller(App\Http\Controllers\ArtikelController::class)
     ->middleware(App\Http\Middleware\OnlyAdminMiddleware::class)->group(function(){
     Route::get('/admin/artikel', 'index')->name('admin.artikel.index');
@@ -57,7 +54,7 @@ Route::controller(App\Http\Controllers\ArtikelController::class)
     Route::post('/admin/artikel/{id}/publish', 'setPublishStatus')->name('admin.artikel.publish');
     Route::post('/admin/artikel/{id}/highlight','setHighlightStatus')->name('admin.artikel.highlight');
 });
-
+/* ==== Agenda Management ==== */
 Route::controller(App\Http\Controllers\AgendaController::class)
     ->middleware(App\Http\Middleware\OnlyAdminMiddleware::class)->group(function(){
     Route::get('/admin/agenda', 'index')->name('admin.agenda.index');
@@ -67,16 +64,23 @@ Route::controller(App\Http\Controllers\AgendaController::class)
     Route::post('/admin/agenda/{id}/update', 'updateAgenda')->name('admin.agenda.update');
     Route::post('/admin/agenda/{id}/lewat', 'setSudahLewatStatus')->name('admin.agenda.lewat');
 });
-
-Route::controller(App\Http\Controllers\DosenController::class)
+/* ==== Kerjasama Management ==== */
+Route::controller(App\Http\Controllers\KerjasamaController::class)
     ->middleware(App\Http\Middleware\OnlyAdminMiddleware::class)->group(function(){
-    Route::get('/admin/dosen', 'index')->name('admin.dosen.index');
-    Route::post('/admin/dosen/create', 'createDosen')->name('admin.dosen.create');
-    Route::post('/admin/dosen/{id}/delete', 'deleteDosen')->name('admin.dosen.delete');
-    Route::get('/admin/dosen/{id}', 'editDosenById')->name('admin.dosen.edit');
-    Route::post('/admin/dosen/{id}/update', 'updateDosen')->name('admin.dosen.update');
+    Route::get('/admin/kerjasama', 'index')->name('admin.kerjasama.index');
+    Route::post('/admin/kerjasama/create', 'createKerjasama')->name('admin.kerjasama.create');
+    Route::post('/admin/kerjasama/{id}/delete', 'deleteKerjasama')->name('admin.kerjasama.delete');
+    Route::get('/admin/kerjasama/{id}', 'editKerjasamaById')->name('admin.kerjasama.edit');
+    Route::post('/admin/kerjasama/{id}/update', 'updateKerjasama')->name('admin.kerjasama.update');
+    Route::post('/admin/kerjasama/{id}/publish', 'setPublishStatus')->name('admin.kerjasama.publish');
 });
-
+/* ==== Tentang Management ==== */
+Route::controller(App\Http\Controllers\TentangController::class)
+    ->middleware(App\Http\Middleware\OnlyAdminMiddleware::class)->group(function(){
+    Route::get('/admin/tentang','index')->name('admin.tentang.index');
+    Route::post('admin/tentang/save', 'saveTentang')->name('admin.tentang.save');
+});
+/* ==== Author Management ==== */
 Route::controller(App\Http\Controllers\AuthorController::class)
     ->middleware(App\Http\Middleware\OnlyAdminMiddleware::class)->group(function(){
     Route::get('/admin/author', 'index')->name('admin.author.index');
@@ -86,6 +90,12 @@ Route::controller(App\Http\Controllers\AuthorController::class)
     Route::post('/admin/author/{id}/update', 'updateAuthor')->name('admin.author.update');
 });
 
-Route::get('/author', function(){
-    return view('author.dashboardAuthor');
-})->middleware(App\Http\Middleware\OnlyAuthorMiddleware::class);
+/* ====================== Author ========================== */
+Route::controller(App\Http\Controllers\ArtikelAuthorController::class)
+    ->middleware(App\Http\Middleware\OnlyAuthorMiddleware::class)->group(function(){
+        Route::get('/author/artikel', 'index')->name('author.artikel.index');
+        Route::post('/author/artikel/create', 'createArtikel')->name('author.artikel.create');
+        Route::post('/author/artikel/{id}/delete', 'deleteArtikel')->name('author.artikel.delete');
+        Route::get('/author/artikel/{id}', 'editArtikelById')->name('author.artikel.edit');
+        Route::post('/author/artikel/{id}/update', 'updateArtikel')->name('author.artikel.update');
+});

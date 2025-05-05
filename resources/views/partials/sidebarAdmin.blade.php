@@ -10,24 +10,6 @@
         </li>
 
         <li>
-            <a href="{{ route('admin.tentang.index') }}">
-                <span class="icon">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                </span>
-                <span class="title">Tentang</span>
-            </a>
-        </li>
-
-        <!-- <li>
-            <a href="{{route('admin.tag.index')}}">
-                <span class="icon">
-                    <ion-icon name="people-outline"></ion-icon>
-                </span>
-                <span class="title">Tag</span>
-            </a>
-        </li> -->
-
-        <li>
             <a href="{{route('admin.dosen.index')}}">
                 <span class="icon">
                     <ion-icon name="chatbubble-outline"></ion-icon>
@@ -35,7 +17,7 @@
                 <span class="title">Dosen</span>
             </a>
         </li>
-
+        
         <li>
             <a href="{{route('admin.publikasi.index')}}">
                 <span class="icon">
@@ -69,6 +51,15 @@
                     <ion-icon name="settings-outline"></ion-icon>
                 </span>
                 <span class="title">KerjaSama</span>
+            </a>
+        </li>
+        
+        <li>
+            <a href="{{ route('admin.tentang.index') }}">
+                <span class="icon">
+                    <ion-icon name="information-circle-outline"></ion-icon>
+                </span>
+                <span class="title">Tentang</span>
             </a>
         </li>
 

@@ -43,9 +43,9 @@ class UserController extends Controller
             request()->session()->put("role", $role);
 
             if ($role === 'admin') {
-                return redirect('/admin/author');
+                return redirect('/admin/dosen');
             } elseif ($role === 'author') {
-                return redirect('/author');
+                return redirect('/author/artikel');
             }
         }
 
