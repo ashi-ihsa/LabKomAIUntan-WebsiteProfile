@@ -1,9 +1,28 @@
 <?php
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
+/*  
+ *  route(/welcome) for Dev Testing Purpose
+ */
+Route::get('/welcome', function () {
     return view('welcome');
 });
+
+/* ====================== WebsiteProfile ========================== */
+Route::controller(App\Http\Controllers\WebsiteProfileController::class)->group(function(){
+    Route::get('/', 'index')->name('dosenIndex');
+    Route::get('/dosen/{id}', 'showDosenById')->name('dosenShow');
+    Route::get('/publikasi', 'indexPublikasi')->name('publikasiIndex');
+    Route::get('/publikasi/{id}', 'showPublikasiById')->name('publikasiShow');
+    Route::get('/artikel', 'indexArtikel')->name('artikelIndex');
+    Route::get('/artikel/{id}', 'showArtikelById')->name('artikelShow');
+    Route::get('/agenda', 'indexAgenda')->name('agendaIndex');
+    Route::get('/agenda/{id}', 'showAgendaById')->name('agendaShow');
+    Route::get('/kerjsama', 'indexKerjasama')->name('kerjasamaIndex');
+    Route::get('/kerjasama/{id}', 'showKerjasamaById')->name('kerjasamaShow');
+    Route::get('/tentang', 'indexTentang')->name('tentangIndex');
+});
+
 /* ====================== Login ========================== */
 Route::get('/login', [App\Http\Controllers\DashboardController::class, 'home']);
 Route::controller(App\Http\Controllers\UserController::class)->group(function(){
@@ -24,7 +43,7 @@ Route::controller(App\Http\Controllers\DosenController::class)
 });
 /* ==== Tag Management ==== 
  * Not Yet Implements
-*/
+ */
 // Route::controller(App\Http\Controllers\TagController::class)
 //     ->middleware(App\Http\Middleware\OnlyAdminMiddleware::class)->group(function(){
 //     Route::get('/admin/tag', 'index')->name('admin.tag.index');
