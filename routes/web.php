@@ -37,6 +37,37 @@ Route::controller(App\Http\Controllers\PublikasiController::class)
     Route::post('/admin/publikasi/{id}/highlight','setHighlightStatus')->name('admin.publikasi.highlight');
 });
 
+Route::controller(App\Http\Controllers\KerjasamaController::class)
+    ->middleware(App\Http\Middleware\OnlyAdminMiddleware::class)->group(function(){
+    Route::get('/admin/kerjasama', 'index')->name('admin.kerjasama.index');
+    Route::post('/admin/kerjasama/create', 'createKerjasama')->name('admin.kerjasama.create');
+    Route::post('/admin/kerjasama/{id}/delete', 'deleteKerjasama')->name('admin.kerjasama.delete');
+    Route::get('/admin/kerjasama/{id}', 'editKerjasamaById')->name('admin.kerjasama.edit');
+    Route::post('/admin/kerjasama/{id}/update', 'updateKerjasama')->name('admin.kerjasama.update');
+    Route::post('/admin/kerjasama/{id}/publish', 'setPublishStatus')->name('admin.kerjasama.publish');
+});
+
+Route::controller(App\Http\Controllers\ArtikelController::class)
+    ->middleware(App\Http\Middleware\OnlyAdminMiddleware::class)->group(function(){
+    Route::get('/admin/artikel', 'index')->name('admin.artikel.index');
+    Route::post('/admin/artikel/create', 'createArtikel')->name('admin.artikel.create');
+    Route::post('/admin/artikel/{id}/delete', 'deleteArtikel')->name('admin.artikel.delete');
+    Route::get('/admin/artikel/{id}', 'editArtikelById')->name('admin.artikel.edit');
+    Route::post('/admin/artikel/{id}/update', 'updateArtikel')->name('admin.artikel.update');
+    Route::post('/admin/artikel/{id}/publish', 'setPublishStatus')->name('admin.artikel.publish');
+    Route::post('/admin/artikel/{id}/highlight','setHighlightStatus')->name('admin.artikel.highlight');
+});
+
+Route::controller(App\Http\Controllers\AgendaController::class)
+    ->middleware(App\Http\Middleware\OnlyAdminMiddleware::class)->group(function(){
+    Route::get('/admin/agenda', 'index')->name('admin.agenda.index');
+    Route::post('/admin/agenda/create', 'createAgenda')->name('admin.agenda.create');
+    Route::post('/admin/agenda/{id}/delete', 'deleteAgenda')->name('admin.agenda.delete');
+    Route::get('/admin/agenda/{id}', 'editAgendaById')->name('admin.agenda.edit');
+    Route::post('/admin/agenda/{id}/update', 'updateAgenda')->name('admin.agenda.update');
+    Route::post('/admin/agenda/{id}/lewat', 'setSudahLewatStatus')->name('admin.agenda.lewat');
+});
+
 Route::controller(App\Http\Controllers\DosenController::class)
     ->middleware(App\Http\Middleware\OnlyAdminMiddleware::class)->group(function(){
     Route::get('/admin/dosen', 'index')->name('admin.dosen.index');

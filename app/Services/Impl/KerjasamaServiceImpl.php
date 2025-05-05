@@ -1,15 +1,15 @@
 <?php
 namespace App\Services\Impl;
 
-use App\Models\Publikasi;
-use App\Services\PublikasiService;
+use App\Models\Kerjasama;
+use App\Services\KerjasamaService;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
-class PublikasiServiceImpl implements PublikasiService
+class KerjasamaServiceImpl implements KerjasamaService
 {
     private function extractImagePathsFromHtml(?string $html, string $id): array
-    {
+    {   
         $dom = new \DomDocument();
         libxml_use_internal_errors(true);
         $dom->loadHTML($html ?: '<div></div>', LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
@@ -18,7 +18,7 @@ class PublikasiServiceImpl implements PublikasiService
         $paths = [];
         foreach ($images as $img) {
             $src = $img->getAttribute('src');
-            if (str_starts_with($src, "/storage/publikasi/$id/")) {
+            if (str_starts_with($src, "/storage/kerjasama/$id/")) {
                 $paths[] = $src;
             }
         }
@@ -26,78 +26,41 @@ class PublikasiServiceImpl implements PublikasiService
         return $paths;
     }
 
-    public function createPublikasi(
-        UploadedFile $image,
-        string $nama,
-        string $deskripsi,
-        string $tahun,
-        int $dosen_id,
-        bool $publish = false,
-        bool $highlight = false
-    ): void {
+    public function createKerjasama(UploadedFile $image,string $nama): void 
+    {
         // Buat record kosong terlebih dahulu
-        $publikasi = Publikasi::create([
+        $kerjasama = Kerjasama::create([
             'nama' => $nama,
             'thumbnail' => null,
-            'deskripsi' => $deskripsi,
             'content' => null,
-            'tahun' => $tahun,
-            'dosen_id' => $dosen_id,
-            'publish' => $publish,
-            'highlight' => $highlight,
         ]);
 
         // Simpan thumbnail
         $extension = strtolower($image->getClientOriginalExtension());
         $filename = "thumbnail.$extension";
-        $folder = "publikasi/{$publikasi->id}";
+        $folder = "kerjasama/{$kerjasama->id}";
         $path = $image->storeAs($folder, $filename, 'public');
 
         // Update thumbnail path
-        $publikasi->update([
+        $kerjasama->update([
             'thumbnail' => $path,
         ]);
     }
 
-    public function getPublikasi(): array
+    public function getKerjasama(): array
     {
-        return Publikasi::with('dosen')->get()->map(function ($publikasi) {
-            return [
-                'id' => $publikasi->id,
-                'nama' => $publikasi->nama,
-                'thumbnail' => $publikasi->thumbnail,
-                'deskripsi' => $publikasi->deskripsi,
-                'content' => $publikasi->content,
-                'tahun' => $publikasi->tahun,
-                'dosen_id' => $publikasi->dosen_id,
-                'dosen_nama' => $publikasi->dosen?->nama, // Gunakan null-safe operator
-                'publish' => $publikasi->publish,
-                'highlight' => $publikasi->highlight,
-            ];
-        })->toArray();
+        return Kerjasama::all()->toArray();
     }
 
     public function findById(string $id): array
     {
-        $publikasi = Publikasi::with('dosen')->findOrFail($id);
-        return [
-            'id' => $publikasi->id,
-            'nama' => $publikasi->nama,
-            'thumbnail' => $publikasi->thumbnail,
-            'deskripsi' => $publikasi->deskripsi,
-            'content' => $publikasi->content,
-            'tahun' => $publikasi->tahun,
-            'dosen_id' => $publikasi->dosen_id,
-            'dosen_nama' => $publikasi->dosen?->nama, // null-safe
-            'publish' => $publikasi->publish,
-            'highlight' => $publikasi->highlight,
-        ];
+        return Kerjasama::findOrFail($id)->toArray();
     }
 
-    public function savePublikasiWithCleanup(string $id, ?string $newContent): string
+    public function saveKerjasamaWithCleanup(string $id, ?string $newContent): string
     {
-        $publikasi = Publikasi::findOrFail($id);
-        $oldContent = $publikasi->content ?? '';
+        $kerjasama = Kerjasama::findOrFail($id);
+        $oldContent = $kerjasama->content ?? '';
 
         $oldImages = $this->extractImagePathsFromHtml($oldContent, $id);
         $newImages = $this->extractImagePathsFromHtml($newContent, $id);
@@ -124,7 +87,7 @@ class PublikasiServiceImpl implements PublikasiService
 
                 $data = base64_decode(substr($src, strpos($src, ',') + 1));
                 $filename = time() . '_' . $index . '.' . $imageType;
-                $folder = "publikasi/$id/$today/";
+                $folder = "kerjasama/$id/$today/";
                 $fullPath = $folder . $filename;
 
                 Storage::disk('public')->put($fullPath, $data);
@@ -133,28 +96,30 @@ class PublikasiServiceImpl implements PublikasiService
         }
 
         $finalContent = $dom->saveHTML();
-        $publikasi->update(['content' => $finalContent]);
+        $kerjasama->update(['content' => $finalContent]);
 
         return $finalContent;
     }
 
-    public function updatePublikasi(string $id,?UploadedFile $image,string $nama,string $deskripsi,?string $content,string $tahun,int $dosenId,bool $publish = false, bool $highlight = false): void {
-        $publikasi = Publikasi::findOrFail($id);
+    public function updateKerjasama(
+        string $id,
+        ?UploadedFile $image,
+        string $nama,
+        ?string $content,
+        bool $publish = false
+    ): void {
+        $kerjasama = Kerjasama::findOrFail($id);
 
         $data = [
             'nama' => $nama,
-            'deskripsi' => $deskripsi,
-            'tahun' => $tahun,
-            'dosen_id' => $dosenId,
             'publish' => $publish,
-            'highlight' => $highlight,
-            'content' => $this->savePublikasiWithCleanup($id, $content),
+            'content' => $this->saveKerjasamaWithCleanup($id, $content),
         ];
 
         if ($image) {
             $extension = strtolower($image->getClientOriginalExtension());
             $filename = "thumbnail.$extension";
-            $folder = "publikasi/$id";
+            $folder = "kerjasama/$id";
             $imagePath = "$folder/$filename";
 
             $files = Storage::disk('public')->files($folder);
@@ -168,32 +133,25 @@ class PublikasiServiceImpl implements PublikasiService
             $data['thumbnail'] = $path;
         }
 
-        $publikasi->update($data);
+        $kerjasama->update($data);
     }
 
-    public function deletePublikasi(string $id): void
+    public function deleteKerjasama(string $id): void
     {
-        $publikasi = Publikasi::findOrFail($id);
-        $folderPath = "publikasi/$id";
+        $kerjasama = Kerjasama::findOrFail($id);
+        $folderPath = "kerjasama/$id";
 
         if (Storage::disk('public')->exists($folderPath)) {
             Storage::disk('public')->deleteDirectory($folderPath);
         }
 
-        $publikasi->delete();
+        $kerjasama->delete();
     }
 
     // Opsional: Toggle publish
     public function setPublishStatus(string $id, bool $status): void
     {
-        $publikasi = Publikasi::findOrFail($id);
-        $publikasi->update(['publish' => $status]);
-    }
-
-    // Opsional: Toggle highlight
-    public function setHighlightStatus(string $id, bool $status): void
-    {
-        $publikasi = Publikasi::findOrFail($id);
-        $publikasi->update(['highlight' => $status]);
+        $kerjasama = Kerjasama::findOrFail($id);
+        $kerjasama->update(['publish' => $status]);
     }
 }

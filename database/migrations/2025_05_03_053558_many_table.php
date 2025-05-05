@@ -41,6 +41,7 @@ return new class extends Migration
         Schema::create('artikel', function (Blueprint $table) {
             $table->id();
             $table->string('thumbnail')->nullable();
+            $table->string('nama')->nullable();
             $table->longText('content')->nullable();
             $table->boolean('publish')->default(false);
             $table->boolean('highlight')->default(false);
@@ -51,6 +52,7 @@ return new class extends Migration
         Schema::create('agenda', function (Blueprint $table) {
             $table->id();
             $table->string('thumbnail')->nullable();
+            $table->string('nama')->nullable();
             $table->string('deskripsi')->nullable();
             $table->longText('content')->nullable();
             $table->boolean('sudah_lewat')->default(false);
@@ -62,6 +64,7 @@ return new class extends Migration
         Schema::create('kerjasama', function (Blueprint $table) {
             $table->id();
             $table->string('thumbnail')->nullable();
+            $table->string('nama')->nullable();
             $table->longText('content')->nullable();
             $table->boolean('publish')->default(false);
             $table->timestamps();

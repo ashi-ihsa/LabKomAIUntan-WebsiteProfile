@@ -18,14 +18,14 @@
             </a>
         </li>
 
-        <li>
+        <!-- <li>
             <a href="{{route('admin.tag.index')}}">
                 <span class="icon">
                     <ion-icon name="people-outline"></ion-icon>
                 </span>
                 <span class="title">Tag</span>
             </a>
-        </li>
+        </li> -->
 
         <li>
             <a href="{{route('admin.dosen.index')}}">
@@ -46,11 +46,29 @@
         </li>
 
         <li>
-            <a href="#">
+            <a href="{{route('admin.artikel.index')}}">
                 <span class="icon">
                     <ion-icon name="settings-outline"></ion-icon>
                 </span>
-                <span class="title">Settings</span>
+                <span class="title">Artikel</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="{{route('admin.agenda.index')}}">
+                <span class="icon">
+                    <ion-icon name="settings-outline"></ion-icon>
+                </span>
+                <span class="title">Agenda</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="{{route('admin.kerjasama.index')}}">
+                <span class="icon">
+                    <ion-icon name="settings-outline"></ion-icon>
+                </span>
+                <span class="title">KerjaSama</span>
             </a>
         </li>
 

@@ -8,7 +8,8 @@ class Artikel extends Model
 {
     protected $table = 'artikel';
     protected $fillable = [
-        'thumbnail', 
+        'thumbnail',
+        'nama',
         'content', 
         'publish', 
         'highlight'

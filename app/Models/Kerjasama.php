@@ -8,7 +8,8 @@ class Kerjasama extends Model
 {
     protected $table = 'kerjasama';
     protected $fillable = [
-        'thumbnail', 
+        'thumbnail',
+        'nama',
         'content', 
         'publish'
     ];
