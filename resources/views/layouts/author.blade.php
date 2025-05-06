@@ -40,10 +40,12 @@
                 </div>
             </div>
             
-            <div class="cardBox">
+            <div class="cardBox formCard">
                 <div class="card">
                     <div>
-                        <div class="cardName">{{$title}}</div>
+                        <div class="cardHeader">
+                            <h2>{{$title}}</h2> 
+                        </div>
                     </div>
                 </div>
             </div>

@@ -3,16 +3,16 @@
         <li>
             <a href="#">
                 <span class="icon">
-                    <ion-icon name="logo-apple"></ion-icon>
+                <ion-icon name="people-circle-outline"></ion-icon>
                 </span>
-                <span class="title">Brand Name</span>
+                <span class="title">Dashboard</span>
             </a>
         </li>
 
         <li>
             <a href="{{route('admin.artikel.index')}}">
                 <span class="icon">
-                    <ion-icon name="settings-outline"></ion-icon>
+                    <ion-icon name="book-outline"></ion-icon>
                 </span>
                 <span class="title">Artikel</span>
             </a>

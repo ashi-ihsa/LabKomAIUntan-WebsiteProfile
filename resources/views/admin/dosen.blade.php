@@ -1,55 +1,55 @@
 @extends('layouts.admin')
 
 @section('content')
-<form method="POST" action="{{ route('admin.dosen.create') }}" enctype="multipart/form-data">
-    @csrf
-    <div>
-        <label for="nama">Nama:</label>
-        <input type="text" name="nama" required>
+<div class="cardBox formCard">
+    <div class="card">
+        <div class="cardHeader">
+            <h2>Tambah Dosen</h2>
+        </div>
+        <form method="POST" action="{{ route('admin.dosen.create') }}" enctype="multipart/form-data">
+            @csrf
+            <div style="margin-bottom: 15px;">
+                <label for="nama">Nama:</label>
+                <input type="text" name="nama" required>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label for="image">Gambar (Upload File):</label>
+                <input type="file" name="image" id="image" accept="image/*" required>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label for="deskripsi">Deskripsi Singkat:</label>
+                <input type="text" name="deskripsi" required>
+            </div>
+            <button type="submit">Tambah Dosen</button>
+        </form>
     </div>
-    <div>
-        <label for="image">Gambar (Upload File):</label><br>
-        <input type="file" name="image" id="image" accept="image/*" required>
-    </div>
-    <div>
-        <label for="deskripsi">Deskripsi Singkat:</label>
-        <input type="text" name="deskripsi" required>
-    </div>
-    <button type="submit" class="btn btn-success">Tambah Dosen</button>
-</form>
+</div>
 
-<hr>
-
-<h2>Daftar Dosen</h2>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Gambar</th>
-            <th>Nama</th>
-            <th>Aksi</th>
-        </tr>
-    </thead>
-    <tbody>
+<!-- KOTAK BESAR -->
+<div class="container-dosen">
+    <h2 class="judul-dosen">Daftar Dosen</h2>
+    <div class="grid-dosen">
         @foreach($dosenData as $dosen)
-        <tr>
-            <td>
-                @if($dosen['image'])
-                    <img src="{{ asset('storage/' . $dosen['image']) }}" width="100">
-                @endif
-            </td>
-            <td>{{ $dosen['nama'] }}</td>
-            <td>
-                <form action="{{ route('admin.dosen.delete', ['id' => $dosen['id']]) }}" method="POST">
-                    @csrf
-                    <button class="btn btn-danger">Delete</button>
-                </form>
-                <form action="{{ route('admin.dosen.edit', ['id' => $dosen['id']]) }}" method="GET">
-                    @csrf
-                    <button class="btn btn-warning">Edit</button>
-                </form>
-            </td>
-        </tr>
+        <div class="card-dosen">
+            <div class="gambar-dosen">
+                <img src="{{ asset('storage/' . $dosen['image']) }}" alt="Foto Dosen">
+            </div>
+            <div class="konten-dosen">
+                <div class="nama-dosen">{{ $dosen['nama'] ?? 'Nama Dosen' }}</div>
+                <div class="aksi-dosen">
+                    <form action="{{ route('admin.dosen.edit', ['id' => $dosen['id']]) }}" method="GET">
+                        @csrf
+                        <button class="btn-edit">Edit</button>
+                    </form>
+                    <form action="{{ route('admin.dosen.delete', ['id' => $dosen['id']]) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus dosen ini?');">
+                        @csrf
+                        <button class="btn-hapus">Hapus</button>
+                    </form>
+                </div>
+            </div>
+        </div>
         @endforeach
-    </tbody>
-</table>
+    </div>
+</div>
+
 @endsection

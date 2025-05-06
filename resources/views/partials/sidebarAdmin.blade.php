@@ -3,16 +3,16 @@
         <li>
             <a href="#">
                 <span class="icon">
-                    <ion-icon name="logo-apple"></ion-icon>
+                    <ion-icon name="people-circle-outline"></ion-icon>
                 </span>
-                <span class="title">Brand Name</span>
+                <span class="title">Dashboard</span>
             </a>
         </li>
 
         <li>
             <a href="{{route('admin.dosen.index')}}">
                 <span class="icon">
-                    <ion-icon name="chatbubble-outline"></ion-icon>
+                    <ion-icon name="accessibility-outline"></ion-icon>
                 </span>
                 <span class="title">Dosen</span>
             </a>
@@ -30,7 +30,7 @@
         <li>
             <a href="{{route('admin.artikel.index')}}">
                 <span class="icon">
-                    <ion-icon name="settings-outline"></ion-icon>
+                    <ion-icon name="book-outline"></ion-icon>
                 </span>
                 <span class="title">Artikel</span>
             </a>
@@ -39,7 +39,7 @@
         <li>
             <a href="{{route('admin.agenda.index')}}">
                 <span class="icon">
-                    <ion-icon name="settings-outline"></ion-icon>
+                    <ion-icon name="calendar-outline"></ion-icon>
                 </span>
                 <span class="title">Agenda</span>
             </a>
@@ -48,7 +48,7 @@
         <li>
             <a href="{{route('admin.kerjasama.index')}}">
                 <span class="icon">
-                    <ion-icon name="settings-outline"></ion-icon>
+                    <ion-icon name="mail-unread-outline"></ion-icon>
                 </span>
                 <span class="title">KerjaSama</span>
             </a>

@@ -6,46 +6,122 @@
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
 </head>
-<h1>{{ $title }}</h1>
+<style>
+.edit-dosen-container {
+    max-width: 100%;
+    margin: 20px;
+    padding: 30px;
+    background-color: #ffffff;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    border-radius: 20px;
+    font-family: 'Segoe UI', sans-serif;
+}
 
-@if(isset($error))
-    <div style="color: red; margin-bottom: 10px;">
-        {{ $error }}
-    </div>
-@endif
+.title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 25px;
+}
 
-<form method="POST" action="{{ route('admin.dosen.update', ['id' => $dosen['id']]) }}" enctype="multipart/form-data">
-    @csrf
-    <input type="hidden" name="id" value="{{ $dosen['id'] }}">
+.error-message {
+    background-color: #ffe5e5;
+    color: #cc0000;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+}
 
-    <div>
-        <label>Nama</label>
-        <input type="text" name="nama" value="{{ $dosen['nama'] }}" required>
-    </div>
+.edit-dosen-form .form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
 
-    <div style="margin-top: 10px;">
-        <label>Gambar Saat Ini:</label><br>
-        @if($dosen['image'])
-            <img src="{{ asset('storage/' . $dosen['image']) }}" alt="Gambar Dosen" style="max-width: 200px; height: auto;">
-        @else
-            <p><em>Belum ada gambar</em></p>
-        @endif
-    </div>
+.edit-dosen-form label {
+    font-weight: 600;
+    margin-bottom: 6px;
+}
 
-    <div style="margin-top: 10px;">
-        <label>Ganti Gambar (jika perlu):</label><br>
-        <input type="file" name="image" accept="image/*">
-    </div>
+.edit-dosen-form input[type="text"],
+.edit-dosen-form input[type="file"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+}
 
-    <div style="margin-top: 10px;">
-        <label>Deskripsi</label>
-        <input type="text" name="deskripsi" value="{{ $dosen['deskripsi'] }}" required>
-    </div>
+.gambar-preview {
+    max-width: 200px;
+    border-radius: 8px;
+    margin-top: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
 
-    <textarea id="summernote" name="content">{!! $dosen['content'] !!}</textarea>
-    @include('partials.summernote')
+#summernote {
+    margin-top: 5px;
+}
 
-    <div style="margin-top: 15px;">
-        <button type="submit" class="btn btn-success">Update Dosen</button>
-    </div>
-</form>
+.submit-button {
+    background-color: #28a745;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.submit-button:hover {
+    background-color: #218838;
+}
+
+</style>
+<div class="edit-dosen-container">
+    <h1 class="title">{{ $title }}</h1>
+
+    @if(isset($error))
+        <div class="error-message">
+            {{ $error }}
+        </div>
+    @endif
+
+    <form method="POST" action="{{ route('admin.dosen.update', ['id' => $dosen['id']]) }}" enctype="multipart/form-data" class="edit-dosen-form">
+        @csrf
+        <input type="hidden" name="id" value="{{ $dosen['id'] }}">
+
+        <div class="form-group">
+            <label for="nama">Nama</label>
+            <input type="text" name="nama" id="nama" value="{{ $dosen['nama'] }}" required>
+        </div>
+
+        <div class="form-group">
+            <label>Gambar Saat Ini</label>
+            @if($dosen['image'])
+                <img src="{{ asset('storage/' . $dosen['image']) }}" alt="Gambar Dosen" class="gambar-preview">
+            @else
+                <p><em>Belum ada gambar</em></p>
+            @endif
+        </div>
+
+        <div class="form-group">
+            <label for="image">Ganti Gambar (jika perlu)</label>
+            <input type="file" name="image" id="image" accept="image/*">
+        </div>
+
+        <div class="form-group">
+            <label for="deskripsi">Deskripsi Singkat</label>
+            <input type="text" name="deskripsi" id="deskripsi" value="{{ $dosen['deskripsi'] }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="summernote">Konten Profil Lengkap</label>
+            <textarea id="summernote" name="content">{!! $dosen['content'] !!}</textarea>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="submit-button">Update Dosen</button>
+        </div>
+    </form>
+</div>
+@include('partials.summernote')
