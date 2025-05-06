@@ -1,7 +1,17 @@
 @extends('layouts.websiteProfile')
 
 @section('content')
-<a href="{{ route('dosenIndex') }}" class="btn btn-danger">Beranda</a>
-<a href="{{ route('publikasiIndex') }}" class="btn btn-danger">Publikasi</a>
-{!! $publikasiData['content'] !!}
+<main class="show-container">
+    <div class="breadcrumb-nav">
+        <a href="{{ route('dosenIndex') }}">Beranda</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <a href="{{ route('publikasiIndex') }}">Publikasi</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <span class="breadcrumb-nama">{{$publikasiData['nama']}}</span>
+    </div>
+
+    <section class="content">
+        {!! $publikasiData['content'] !!}
+    </section>
+</main>
 @endsection

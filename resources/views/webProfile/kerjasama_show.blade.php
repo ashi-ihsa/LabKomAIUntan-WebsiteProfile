@@ -1,7 +1,17 @@
 @extends('layouts.websiteProfile')
 
 @section('content')
-<a href="{{ route('dosenIndex') }}" class="btn btn-danger">Beranda</a>
-<a href="{{ route('kerjasamaIndex') }}" class="btn btn-danger">Kerjasama</a>
-{!! $kerjasamaData['content'] !!}
+<main class="show-container">
+    <div class="breadcrumb-nav">
+        <a href="{{ route('dosenIndex') }}">Beranda</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <a href="{{ route('kerjasamaIndex') }}">Kerjasama</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <span class="breadcrumb-nama">{{$kerjasamaData['nama']}}</span>
+    </div>
+
+    <section class="content">
+        {!! $kerjasamaData['content'] !!}
+    </section>
+</main>
 @endsection

@@ -1,0 +1,629 @@
+/* =============== Globals ============== */
+* {
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: "Montserrat", sans-serif;
+    background-color: #ddd;
+  }
+
+/* =============== NavBar ============== */
+nav {
+background: #0082e6;
+height: 80px;
+width: 100%;
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 0 30px;
+}
+.nav-left {
+display: flex;
+align-items: center;
+}
+.Untan {
+height: 50px;
+margin-right: 10px;
+}
+.logo-link {
+text-decoration: none;
+}
+.logo-text {
+color: white;
+font-size: 20px;
+font-weight: bold;
+white-space: nowrap;
+}
+nav ul {
+display: flex;
+align-items: center;
+margin: 0;
+padding: 0;
+}
+nav ul li {
+list-style: none;
+margin: 0 10px;
+}
+nav ul li a {
+color: white;
+font-size: 16px;
+padding: 7px 13px;
+border-radius: 3px;
+text-transform: none;
+}
+a.active,
+a:hover {
+background: #1b9bff;
+transition: 0.3s;
+}
+/* Mobile */
+.checkbtn {
+font-size: 22px;
+color: white;
+display: none;
+cursor: pointer;
+}
+#check {
+display: none;
+}
+@media (max-width: 890px) {
+.checkbtn {
+    display: block;
+}
+
+nav ul {
+    position: fixed;
+    top: 80px;
+    left: -100%;
+    width: 100%;
+    height: calc(100vh - 80px);
+    background: #2c3e50;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: 0.5s;
+}
+
+nav ul li {
+    margin: 20px 0;
+}
+
+nav ul li a {
+    font-size: 20px;
+}
+
+#check:checked ~ ul {
+    left: 0;
+}
+
+.logo-text {
+    font-size: 16px;
+}
+
+.Untan {
+    height: 40px;
+}
+}  
+
+/* =============== Content ============== */
+.show-container {
+    padding: 2rem;
+    background-color: #ddd;
+    min-height: 100vh;
+}
+/* Breadcrumb nav */
+.breadcrumb-nav {
+    background-color: transparent;
+    /* padding: 0.5rem 1rem; */
+    display: flex;
+    align-items: center;
+    font-family: sans-serif;
+    font-size: 0.95rem;
+    color: black;
+    gap: 0.1rem; 
+    flex-wrap: nowrap; 
+}
+
+.breadcrumb-nama {
+    white-space: nowrap; /* Biar nggak pindah ke bawah */
+    display: inline; /* Paksa tetap sejajar */
+    margin: 0;
+    padding: 0;
+}
+
+.breadcrumb-nav a {
+    color: black;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.breadcrumb-nav a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb-separator {
+    color: black;
+}
+
+.breadcrumb-nav span {
+    color: black;
+}
+
+.content {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+/* Contoh layout gambar dan info jika content diisi manual */
+/* Responsive layout */
+@media (max-width: 768px) {
+    .content {
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .breadcrumb {
+        font-size: 0.8rem;
+    }
+}
+
+/* =============== Dosen ============== */
+.carousel-container {
+    display: flex;
+    justify-content: center;
+    padding: 2rem 1rem;
+  }
+  
+  .carousel-wrapper {
+    width: 100%;
+    max-width: 1000px;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    position: relative;
+    background: #ddd;
+    border-radius: 12px;
+  }
+  
+  .slide {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transition: transform 0.4s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .slide-content {
+    display: flex;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .slide-image {
+    flex: 1;
+    overflow: hidden;
+  }
+  
+  .slide-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .slide-text {
+    flex: 1;
+    padding: 2rem;
+    background: #eee;
+  }
+  
+  .slide-text h3 {
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  
+  .slide-text a {
+    display: inline-block;
+    margin-top: 1rem;
+    color: #000;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  .btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 10;
+  }
+  
+  .btn.previous { left: 10px; }
+  .btn.next { right: 10px; }
+  
+  .dots {
+    position: absolute;
+    bottom: 15px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .dot {
+    height: 12px;
+    width: 12px;
+    margin: 0 5px;
+    background-color: black;
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+    opacity: 0.5;
+  }
+  
+  .dot.active {
+    opacity: 1;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .slide-content {
+      flex-direction: column;
+    }
+  
+    .slide-image,
+    .slide-text {
+      flex: unset;
+      width: 100%;
+      height: auto;
+    }
+  
+    .slide-text {
+      padding: 1rem;
+    }
+  
+    .btn {
+      font-size: 1.5rem;
+    }
+  }
+
+/* =============== Publikasi ============== */
+  /* Container untuk seluruh halaman */
+.container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+/* Bagian utama untuk publikasi */
+.main-content {
+    width: 70%;
+    margin-right: 20px;
+}
+
+/* Daftar publikasi */
+.publications {
+    display: flex;
+    flex-direction: column;
+}
+
+.publication-item {
+    display: flex;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+
+.publication-thumbnail {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-right: 20px;
+}
+
+.publication-details {
+    flex-grow: 1;
+}
+
+.publication-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #d9534f;
+    text-decoration: none;
+}
+
+.publication-title:hover {
+    text-decoration: underline;
+}
+
+.publication-author,
+.publication-description,
+.publication-year {
+    margin: 5px 0;
+}
+
+.publication-tags {
+    margin-top: 10px;
+}
+
+.tag {
+    background-color: #f8f9fa;
+    padding: 5px;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+/* Sidebar untuk highlight agenda */
+/* Sidebar untuk highlight agenda */
+.sidebar {
+    width: 25%;
+}
+
+.highlight-agenda {
+    margin-bottom: 20px;
+}
+
+.highlight-item {
+    display: block;
+    background-color: #f8f9fa; /* Latar belakang lebih terang */
+    color: #333; /* Teks berwarna gelap untuk kontras */
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc; /* Tambahkan border untuk pemisah */
+}
+
+.highlight-item p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.highlight-title {
+    font-weight: bold;
+    font-size: 16px;
+    color: #d9534f; /* Warna judul publikasi */
+}
+
+.highlight-author,
+.highlight-year {
+    color: #555; /* Warna untuk nama dosen dan tahun */
+}
+
+/* Hover efek jika diinginkan */
+.highlight-item:hover {
+    background-color: #e0e0e0; /* Efek hover latar belakang */
+    border-color: #d9534f; /* Border merah saat hover */
+}
+
+/* Search bar */
+.search-bar input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
+/* =============== Agenda ============== */
+/* =============== General Section Styles ============== */
+section {
+  margin-bottom: 2rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+/* =============== Incoming Events Section ============== */
+.incoming-events {
+  background-color: #e9f7f7;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.incoming-events .event-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 15px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.incoming-events .event-thumbnail {
+  width: 80px; /* Reduced size for compact layout */
+  height: 80px;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+.incoming-events .event-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #d9534f;
+  text-decoration: none;
+  margin-bottom: 5px;
+}
+
+.incoming-events .event-title:hover {
+  text-decoration: underline;
+}
+
+.incoming-events .event-description {
+  font-size: 12px;
+  color: #555;
+}
+
+.incoming-events .event-date {
+  font-size: 11px;
+  color: #888;
+  margin-top: 5px;
+}
+
+/* =============== Past Events Section ============== */
+.past-events {
+  background-color: #f7e9e9;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.past-events .event-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 15px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.past-events .event-thumbnail {
+  width: 80px; /* Same size for compact layout */
+  height: 80px;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+.past-events .event-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #d9534f;
+  text-decoration: none;
+  margin-bottom: 5px;
+}
+
+.past-events .event-title:hover {
+  text-decoration: underline;
+}
+
+.past-events .event-description {
+  font-size: 12px;
+  color: #555;
+}
+
+.past-events .event-date {
+  font-size: 11px;
+  color: #888;
+  margin-top: 5px;
+}
+
+/* =============== Shared Styles for Both Sections ============== */
+.event-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 15px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.event-thumbnail {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+.event-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #d9534f;
+  text-decoration: none;
+}
+
+.event-title:hover {
+  text-decoration: underline;
+}
+
+.event-description {
+  font-size: 12px;
+  color: #555;
+}
+
+.event-date {
+  font-size: 11px;
+  color: #888;
+  margin-top: 5px;
+}
+
+/* Styling for different sections */
+.incoming-events {
+  background-color: #e9f7f7;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.past-events {
+  background-color: #f7e9e9;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+
+/* =============== Kerjasama ============== */
+/* Kerjasama container */
+.kerjasama-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Auto fill with minimum size of 200px per column */
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Kerjasama item */
+.kerjasama-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ccc;
+}
+
+/* Thumbnail styling */
+.kerjasama-thumbnail {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+/* Nama Kerjasama */
+.kerjasama-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: #d9534f;
+  text-decoration: none;
+}
+
+/* Hover effect for kerjasama name */
+.kerjasama-name:hover {
+  text-decoration: underline;
+}
+
+/* Responsiveness for mobile devices */
+@media (max-width: 768px) {
+  .kerjasama-container {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Adjust for smaller screens */
+  }
+}

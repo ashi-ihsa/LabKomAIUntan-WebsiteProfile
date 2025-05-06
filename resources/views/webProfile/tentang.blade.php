@@ -1,7 +1,15 @@
 @extends('layouts.websiteProfile')
 
 @section('content')
-<a href="{{ route('dosenIndex') }}" class="btn btn-danger">Beranda</a>
-<a href="{{ route('tentangIndex') }}" class="btn btn-danger">tentang</a>
-{!! $tentangData !!}
+<main class="show-container">
+    <div class="breadcrumb-nav">
+        <a href="{{ route('dosenIndex') }}">Beranda</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <span class="breadcrumb-nama">Tentang</span>
+    </div>
+
+    <section class="content">
+        {!! $tentangData !!}
+    </section>
+</main>
 @endsection
