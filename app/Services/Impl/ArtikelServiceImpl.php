@@ -49,7 +49,9 @@ class ArtikelServiceImpl implements ArtikelService
 
     public function getArtikel(): array
     {
-        return Artikel::all()->toArray();
+        return Artikel::orderBy('created_at','desc')
+            ->get()
+            ->toArray();
     }
 
     public function findById(string $id): array
@@ -106,16 +108,12 @@ class ArtikelServiceImpl implements ArtikelService
         ?UploadedFile $image,
         string $nama,
         ?string $content,
-        bool $publish = false,
-        bool $highlight = false
-    ): void {
+    ): void 
+    {
         $artikel = Artikel::findOrFail($id);
 
         $data = [
             'nama' => $nama,
-            'publish' => $publish,
-            'highlight' => $highlight,
-            'publish' => $publish,
             'content' => $this->saveArtikelWithCleanup($id, $content),
         ];
 

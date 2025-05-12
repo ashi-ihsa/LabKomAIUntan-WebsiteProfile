@@ -16,7 +16,6 @@ interface AgendaService
         string $deskripsi,
         ?\DateTime $tanggal,
         ?string $content,
-        bool $sudah_lewat = false
     ): void;
     public function deleteAgenda(string $id): void;
     public function setSudahLewatStatus(string $id, bool $status): void;

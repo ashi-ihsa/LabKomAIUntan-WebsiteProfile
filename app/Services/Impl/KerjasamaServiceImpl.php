@@ -49,7 +49,9 @@ class KerjasamaServiceImpl implements KerjasamaService
 
     public function getKerjasama(): array
     {
-        return Kerjasama::all()->toArray();
+        return Kerjasama::orderBy('created_at','desc')
+            ->get()
+            ->toArray();
     }
 
     public function findById(string $id): array

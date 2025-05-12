@@ -49,7 +49,9 @@ class AgendaServiceImpl implements AgendaService
 
     public function getAgenda(): array
     {
-        return Agenda::all()->toArray();
+        return Agenda::orderBy('tanggal','desc')
+            ->get()
+            ->toArray();
     }
 
     public function findById(string $id): array
@@ -108,8 +110,8 @@ class AgendaServiceImpl implements AgendaService
         string $deskripsi,
         ?\DateTime $tanggal,
         ?string $content,
-        bool $sudah_lewat = false
-    ): void {
+    ): void 
+    {
         $agenda = Agenda::findOrFail($id);
 
         $data = [

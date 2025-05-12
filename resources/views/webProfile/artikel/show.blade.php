@@ -9,14 +9,14 @@
                 <a href="{{ route('dosenIndex') }}">Beranda</a>
             </li>
             <li class="breadcrumb-item">
-                <a href="{{ route('kerjasamaIndex') }}">Kerjasama</a>
+                <a href="{{ route('artikelIndex') }}">Artikel</a>
             </li>
-            <li class="breadcrumb-item active" aria-current="page">{{$kerjasamaData['nama']}}</li>
+            <li class="breadcrumb-item active" aria-current="page">{{$artikelData['nama']}}</li>
         </ol>
     </nav>
 
     <section class="content">
-        {!! $kerjasamaData['content'] !!}
+        {!! $artikelData['content'] !!}
     </section>
 </main>
 @endsection

@@ -10,6 +10,7 @@ use App\Services\PublikasiService;
 use App\Services\TentangService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class WebsiteProfileController extends Controller
 {
@@ -54,33 +55,96 @@ class WebsiteProfileController extends Controller
     /* ==== Publikasi ==== */
     public function indexPublikasi(Request $request): Response
     {
-        $publikasiData = $this->publikasiService->getPublikasi();
-        return response()->view('webProfile.publikasi', [
-            'publikasiData' => $publikasiData
+        $search = strtolower(trim($request->input('search', '')));
+        $perPage = 5;
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+
+        // Ambil semua data
+        $allPublikasi = collect($this->publikasiService->getPublikasi());
+
+        // 1. Ambil data highlight secara terpisah, selalu ditampilkan
+        $highlightPublikasi = $allPublikasi->where('highlight', true)->values();
+
+        // 2. Filter list publikasi (non-highlight) sesuai pencarian
+        $listPublikasi = $allPublikasi->where('highlight', '!=', true);
+
+        if ($search !== '') {
+            $listPublikasi = $listPublikasi->filter(function ($item) use ($search) {
+                return str_contains(strtolower($item['nama']),        $search) ||
+                    str_contains(strtolower($item['dosen_nama']),  $search) ||
+                    str_contains((string) $item['tahun'],          $search);
+            });
+        }
+
+        // 3. Paginate list publikasi
+        $paginated = new LengthAwarePaginator(
+            $listPublikasi->slice(($currentPage - 1) * $perPage, $perPage)->values(),
+            $listPublikasi->count(),
+            $perPage,
+            $currentPage,
+            [
+                'path'  => $request->url(),
+                'query' => $request->query(),
+            ]
+        );
+
+        return response()->view('webProfile.publikasi.index', [
+            'publikasiData' => $paginated,
+            'highlightData' => $highlightPublikasi,
         ]);
     }
     public function showPublikasiById(Request $request, string $id): Response
     {
         $publikasiData = $this->publikasiService->findById($id);
-        return response()->view('webProfile.publikasi_show', [
+        return response()->view('webProfile.publikasi.show', [
             'publikasiData' => $publikasiData
         ]);
     }
     /* ==== Artikel ==== */
     public function indexArtikel(Request $request): Response
     {
-        $artikelData = $this->artikelService->getArtikel();
-        return response()->view('webProfile.artikel', [
-            'artikelData' => $artikelData
+        $search = strtolower(trim($request->input('search', '')));
+        $perPage = 5;
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+
+        // Ambil semua artikel
+        $allArtikel = collect($this->artikelService->getArtikel());
+
+        $highlightArtikel = $allArtikel->where('highlight', true)->values();
+
+        // Filter berdasarkan judul saja
+        if ($search !== '') {
+            $allArtikel = $allArtikel->filter(function ($item) use ($search) {
+                return str_contains(strtolower($item['nama']), $search);
+            });
+        }
+
+        // Paginate hasil filter
+        $paginated = new LengthAwarePaginator(
+            $allArtikel->slice(($currentPage - 1) * $perPage, $perPage)->values(),
+            $allArtikel->count(),
+            $perPage,
+            $currentPage,
+            [
+                'path'  => $request->url(),
+                'query' => $request->query(),
+            ]
+        );
+
+        return response()->view('webProfile.artikel.index', [
+            'artikelData' => $paginated,
+            'highlightData' => $highlightArtikel,
         ]);
     }
+
     public function showArtikelById(Request $request, string $id): Response
     {
         $artikelData = $this->artikelService->findById($id);
-        return response()->view('webProfile.artikel_show', [
+        return response()->view('webProfile.artikel.show', [
             'artikelData' => $artikelData
         ]);
     }
+
     /* ==== Agenda ==== */
     public function indexAgenda(Request $request): Response
     {
@@ -96,6 +160,7 @@ class WebsiteProfileController extends Controller
             'agendaData' => $agendaData
         ]);
     }
+
     /* ==== Kerjasama ==== */
     public function indexKerjasama(Request $request): Response
     {

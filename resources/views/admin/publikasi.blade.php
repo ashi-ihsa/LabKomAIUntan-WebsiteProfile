@@ -48,7 +48,7 @@
             </div>
             <div class="konten-dosen">
                 <div class="nama-dosen">
-                    <h1>{{ $publikasi['nama'] ?? 'Judul Publikasi' }}</h1>
+                    <h4>{{ $publikasi['nama'] ?? 'Judul Publikasi' }}</h1>
                     <p>{{ $publikasi['dosen_nama'] ?? '-' }} 
                         {{ $publikasi['tahun']}}</p>
                 </div>

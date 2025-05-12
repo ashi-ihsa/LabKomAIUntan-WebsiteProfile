@@ -17,8 +17,6 @@ interface PublikasiService
         ?string $content,
         string $tahun,
         int $dosenId,
-        bool $publish = false,
-        bool $highlight = false
     ): void;
     public function deletePublikasi(string $id): void;
     public function setPublishStatus(string $id, bool $status): void;

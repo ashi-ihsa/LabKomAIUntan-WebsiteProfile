@@ -61,7 +61,9 @@ class PublikasiServiceImpl implements PublikasiService
 
     public function getPublikasi(): array
     {
-        return Publikasi::with('dosen')->get()->map(function ($publikasi) {
+        return Publikasi::with('dosen')
+        ->orderBy('tahun', 'desc')
+        ->get()->map(function ($publikasi) {
             return [
                 'id' => $publikasi->id,
                 'nama' => $publikasi->nama,
@@ -138,7 +140,8 @@ class PublikasiServiceImpl implements PublikasiService
         return $finalContent;
     }
 
-    public function updatePublikasi(string $id,?UploadedFile $image,string $nama,string $deskripsi,?string $content,string $tahun,int $dosenId,bool $publish = false, bool $highlight = false): void {
+    public function updatePublikasi(string $id,?UploadedFile $image,string $nama,string $deskripsi,?string $content,string $tahun,int $dosenId): void 
+    {
         $publikasi = Publikasi::findOrFail($id);
 
         $data = [
@@ -146,8 +149,6 @@ class PublikasiServiceImpl implements PublikasiService
             'deskripsi' => $deskripsi,
             'tahun' => $tahun,
             'dosen_id' => $dosenId,
-            'publish' => $publish,
-            'highlight' => $highlight,
             'content' => $this->savePublikasiWithCleanup($id, $content),
         ];
 

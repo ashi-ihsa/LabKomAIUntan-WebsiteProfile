@@ -14,8 +14,6 @@ interface ArtikelService
         ?UploadedFile $image,
         string $nama,
         ?string $content,
-        bool $publish = false,
-        bool $highlight = false
     ): void;
     public function deleteArtikel(string $id): void;
     public function setPublishStatus(string $id, bool $status): void;
