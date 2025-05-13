@@ -6,7 +6,7 @@ use Illuminate\Http\UploadedFile;
 interface PublikasiService
 {
     public function createPublikasi(UploadedFile $image, string $nama, string $deskripsi, string $dosen_id, int $tahun): void;
-    public function getPublikasi(): array;
+    public function getPublikasi(?string $search = null): array;
     public function findById(string $id): array;
     public function savePublikasiWithCleanup(string $id, ?string $newContent): string;
     public function updatePublikasi(

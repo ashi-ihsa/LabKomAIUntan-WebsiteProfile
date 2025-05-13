@@ -6,7 +6,7 @@ use Illuminate\Http\UploadedFile;
 interface KerjasamaService
 {
     public function createKerjasama(UploadedFile $image, string $nama): void;
-    public function getKerjasama(): array;
+    public function getKerjasama(?string $search = null): array;
     public function findById(string $id): array;
     public function saveKerjasamaWithCleanup(string $id, ?string $newContent): string;
     public function updateKerjasama(

@@ -18,12 +18,15 @@ class AgendaController extends Controller
 
     public function index(Request $request): Response
     {
-        $agendaData = $this->agendaService->getAgenda();
-        return response()->view('admin.Agenda', [
+        $search = $request->input('search');
+        $agendaData = $this->agendaService->getAgenda($search);
+
+        return response()->view('admin.agenda', [
             'title' => 'Manajemen Agenda',
             'agendaData' => $agendaData
         ]);
     }
+
 
     public function createAgenda(Request $request): RedirectResponse|Response
     {

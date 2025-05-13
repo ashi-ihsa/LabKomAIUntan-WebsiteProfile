@@ -47,12 +47,17 @@ class KerjasamaServiceImpl implements KerjasamaService
         ]);
     }
 
-    public function getKerjasama(): array
+    public function getKerjasama(?string $search = null): array
     {
-        return Kerjasama::orderBy('created_at','desc')
-            ->get()
-            ->toArray();
+        $query = Kerjasama::orderBy('created_at', 'desc');
+
+        if ($search) {
+            $query->where('nama', 'like', '%' . $search . '%');
+        }
+
+        return $query->get()->toArray();
     }
+
 
     public function findById(string $id): array
     {

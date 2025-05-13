@@ -120,16 +120,19 @@ body
   width: calc(100% - 50px);
   left: 50px;
 }
-
 .topbar {
+  position: sticky;
+  top: 0; /* Penting: menentukan jarak dari atas */
+  z-index: 1030; /* Agar muncul di atas elemen lain */
   width: 100%;
   height: 50px;
+  background-color: #fff; /* Atur warna agar tidak transparan */
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Opsional: efek bayangan */
 }
-
 .toggle {
   position: relative;
   width: 50px;
@@ -139,46 +142,36 @@ body
   align-items: center;
   font-size: 2.5rem;
   cursor: pointer;
+  background-color: transparent;
 }
 
-@media (max-width: 991px) 
-{
-  .navigation {
-      left: -300px;
-  }
-  .navigation.active {
-      width: 300px;
-      left: 0;
-  }
-  .main {
-      width: 100%;
-      left: 0;
-  }
-  .main.active {
-      left: 300px;
-  }
-  .cardBox {
-      grid-template-columns: repeat(2, 1fr);
-  }
-}
 @media (max-width: 480px) 
 {
   .navigation {
-      width: 100%;
-      left: -100%;
-      z-index: 1000;
+    width: 0;
+    z-index: 1000;
   }
-  .navigation.active {
-      width: 100%;
-      left: 0;
+  .main {
+    left: 0;
+    width: 100%;
   }
-  .toggle {
-      z-index: 10001;
+
+  .navigation.active{
+    width: 100%;
   }
-  .main.active .toggle {
-      color: #fff;
-      position: relative;
-      right: 0;
-      left: initial;
+  .main.active{
+    left: 0;
+    width: 0;
+  }
+  .main.active .toggle{
+    color: #fff;
+    position: fixed;
+    
+    right: 10px;
+    left: auto;
+  }
+  .main.active .topbar{
+    background-color: transparent;
+    box-shadow: none;
   }
 }

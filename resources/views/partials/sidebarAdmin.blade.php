@@ -50,7 +50,7 @@
                 <span class="icon">
                     <ion-icon name="mail-unread-outline"></ion-icon>
                 </span>
-                <span class="title">KerjaSama</span>
+                <span class="title">Kerjasama</span>
             </a>
         </li>
         

@@ -6,7 +6,7 @@ use Illuminate\Http\UploadedFile;
 interface AgendaService
 {
     public function createAgenda(UploadedFile $image, string $nama, string $deskripsi, \DateTime $tanggal): void;
-    public function getAgenda(): array;
+    public function getAgenda(?string $search = null): array;
     public function findById(string $id): array;
     public function saveAgendaWithCleanup(string $id, ?string $newContent): string;
     public function updateAgenda(

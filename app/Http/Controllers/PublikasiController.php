@@ -20,8 +20,10 @@ class PublikasiController extends Controller
 
     public function index(Request $request): Response
     {
+        $search = $request->input('search');
         $dosenData = $this->dosenService->getDosenOnlyIdAndName();
-        $publikasiData = $this->publikasiService->getPublikasi();
+        $publikasiData = $this->publikasiService->getPublikasi($search);
+
         return response()->view('admin.publikasi', [
             'title' => 'Manajemen Publikasi',
             'dosenData' => $dosenData,

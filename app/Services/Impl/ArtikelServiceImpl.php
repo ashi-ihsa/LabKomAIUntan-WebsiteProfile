@@ -47,13 +47,17 @@ class ArtikelServiceImpl implements ArtikelService
         ]);
     }
 
-    public function getArtikel(): array
+    public function getArtikel(?string $search = null): array
     {
-        return Artikel::orderBy('created_at','desc')
-            ->get()
-            ->toArray();
-    }
+        $query = Artikel::orderBy('created_at', 'desc');
 
+        if ($search) {
+            $query->where('nama', 'like', '%' . $search . '%');
+        }
+
+        return $query->get()->toArray();
+    }
+    
     public function findById(string $id): array
     {
         return Artikel::findOrFail($id)->toArray();

@@ -17,12 +17,15 @@ class KerjasamaController extends Controller
 
     public function index(Request $request): Response
     {
-        $kerjasamaData = $this->kerjasamaService->getKerjasama();
+        $search = $request->input('search');
+        $kerjasamaData = $this->kerjasamaService->getKerjasama($search);
+
         return response()->view('admin.kerjasama', [
             'title' => 'Manajemen Kerjasama',
             'kerjasamaData' => $kerjasamaData
         ]);
     }
+
 
     public function createKerjasama(Request $request): RedirectResponse|Response
     {

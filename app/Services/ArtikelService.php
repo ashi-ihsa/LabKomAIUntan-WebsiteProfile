@@ -6,7 +6,7 @@ use Illuminate\Http\UploadedFile;
 interface ArtikelService
 {
     public function createArtikel(UploadedFile $image, string $nama): void;
-    public function getArtikel(): array;
+    public function getArtikel(?string $search = null): array;
     public function findById(string $id): array;
     public function saveArtikelWithCleanup(string $id, ?string $newContent): string;
     public function updateArtikel(

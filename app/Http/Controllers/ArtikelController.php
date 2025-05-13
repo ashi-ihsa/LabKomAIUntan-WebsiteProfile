@@ -15,14 +15,17 @@ class ArtikelController extends Controller
         $this->artikelService = $artikelService;
     }
 
-    public function index(Request $request): Response
+   public function index(Request $request): Response
     {
-        $artikelData = $this->artikelService->getArtikel();
+        $search = $request->input('search');
+        $artikelData = $this->artikelService->getArtikel($search);
+
         return response()->view('admin.artikel', [
             'title' => 'Manajemen Artikel',
             'artikelData' => $artikelData
         ]);
     }
+
 
     public function createArtikel(Request $request): RedirectResponse|Response
     {

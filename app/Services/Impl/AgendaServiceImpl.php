@@ -47,12 +47,17 @@ class AgendaServiceImpl implements AgendaService
         ]);
     }
 
-    public function getAgenda(): array
+    public function getAgenda(?string $search = null): array
     {
-        return Agenda::orderBy('tanggal','desc')
-            ->get()
-            ->toArray();
+        $query = Agenda::orderBy('tanggal', 'desc');
+
+        if ($search) {
+            $query->where('nama', 'like', '%' . $search . '%'); // Ganti 'judul' jika field-nya berbeda
+        }
+
+        return $query->get()->toArray();
     }
+
 
     public function findById(string $id): array
     {

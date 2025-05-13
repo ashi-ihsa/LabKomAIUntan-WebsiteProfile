@@ -59,11 +59,20 @@ class PublikasiServiceImpl implements PublikasiService
         ]);
     }
 
-    public function getPublikasi(): array
+    public function getPublikasi(?string $search = null): array
     {
-        return Publikasi::with('dosen')
-        ->orderBy('tahun', 'desc')
-        ->get()->map(function ($publikasi) {
+        $query = Publikasi::with('dosen')->orderBy('tahun', 'desc');
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('nama', 'like', '%' . $search . '%')
+                ->orWhereHas('dosen', function ($dq) use ($search) {
+                    $dq->where('nama', 'like', '%' . $search . '%');
+                });
+            });
+        }
+
+        return $query->get()->map(function ($publikasi) {
             return [
                 'id' => $publikasi->id,
                 'nama' => $publikasi->nama,
@@ -72,12 +81,13 @@ class PublikasiServiceImpl implements PublikasiService
                 'content' => $publikasi->content,
                 'tahun' => $publikasi->tahun,
                 'dosen_id' => $publikasi->dosen_id,
-                'dosen_nama' => $publikasi->dosen?->nama, // Gunakan null-safe operator
+                'dosen_nama' => $publikasi->dosen?->nama,
                 'publish' => $publikasi->publish,
                 'highlight' => $publikasi->highlight,
             ];
         })->toArray();
     }
+
 
     public function findById(string $id): array
     {

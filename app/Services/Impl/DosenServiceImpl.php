@@ -53,10 +53,13 @@ class DosenServiceImpl implements DosenService
         ]);
     }
     
-
-    public function getDosen(): array
+    public function getDosen(?string $search = null): array
     {
-        return Dosen::all()->toArray();
+        $query = Dosen::query();
+        if ($search) {
+            $query->where('nama', 'like', '%' . $search . '%');
+        }
+        return $query->get()->toArray();
     }
 
     public function getDosenOnlyIdAndName():array

@@ -17,7 +17,10 @@ class DosenController extends Controller
 
     public function index(Request $request): Response
     {
-        $dosenData = $this->dosenService->getDosen();
+        $search = $request->query('search');
+
+        $dosenData = $this->dosenService->getDosen($search);
+
         return response()->view('admin.dosen', [
             'title' => 'Manajemen Dosen',
             'dosenData' => $dosenData
