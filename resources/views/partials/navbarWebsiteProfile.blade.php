@@ -1,5 +1,5 @@
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top ">
   <div class="container-fluid">
     <!-- Logo dan Teks -->
     <a class="navbar-brand d-flex align-items-center" href="{{ route('dosenIndex') }}">
