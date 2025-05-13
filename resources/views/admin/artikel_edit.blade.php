@@ -1,122 +1,58 @@
-<head>
-    <!-- jQuery tetap dibutuhkan -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@extends('layouts.admin')
+@section('content')
+<h3 class="mx-3 mb-3 mt-3">{{ $title }}</h3>
+<div class="card shadow-sm mx-3 mb-3">
+    <div class="card-body">
+        {{-- Notifikasi Error --}}
+        @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
 
-    <!-- Summernote versi lite (tanpa bootstrap) -->
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
-</head>
-<style>
-.edit-dosen-container {
-    max-width: 100%;
-    margin: 20px;
-    padding: 30px;
-    background-color: #ffffff;
-    box-shadow: 0 0 15px rgba(0,0,0,0.1);
-    border-radius: 20px;
-    font-family: 'Segoe UI', sans-serif;
-}
+        {{-- Form Edit --}}
+        <form method="POST" action="{{ route('admin.artikel.update', ['id' => $artikelData['id']]) }}" enctype="multipart/form-data">
+            @csrf
+            <input type="hidden" name="id" value="{{ $artikelData['id'] }}">
 
-.title {
-    text-align: center;
-    font-size: 24px;
-    margin-bottom: 25px;
-}
+            {{-- Judul --}}
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="judul" name="nama" value="{{ $artikelData['nama'] }}" placeholder="Judul artikel" required>
+                <label for="judul">Judul artikel</label>
+            </div>
 
-.error-message {
-    background-color: #ffe5e5;
-    color: #cc0000;
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-}
+            {{-- Gambar Saat Ini --}}
+            <div class="mb-3">
+                <label class="form-label">Gambar Saat Ini:</label><br>
+                @if($artikelData['thumbnail'])
+                    <img src="{{ asset('storage/' . $artikelData['thumbnail']) }}" alt="Gambar artikel" class="img-thumbnail" style="max-height: 150px;">
+                @else
+                    <p><em>Belum ada gambar</em></p>
+                @endif
+            </div>
 
-.edit-dosen-form .form-group {
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-}
+            {{-- Upload Gambar Baru --}}
+            <div class="mb-3">
+                <label for="image" class="form-label">Ganti Gambar</label>
+                <input class="form-control" type="file" id="image" name="image" accept="image/*">
+            </div>
 
-.edit-dosen-form label {
-    font-weight: 600;
-    margin-bottom: 6px;
-}
 
-.edit-dosen-form input[type="text"],
-.edit-dosen-form input[type="file"] {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 14px;
-}
+            {{-- Konten (Summernote) --}}
+            <div class="mb-3">
+                <label for="summernote" class="form-label">Konten Lengkap</label>
+                <textarea id="summernote" name="content">{!! $artikelData['content'] ?? '' !!}</textarea>
+            </div>
 
-.gambar-preview {
-    max-width: 200px;
-    border-radius: 8px;
-    margin-top: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
+            {{-- Include Summernote --}}
+            @include('partials.summernote')
 
-#summernote {
-    margin-top: 5px;
-}
-
-.submit-button {
-    background-color: #28a745;
-    color: #fff;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 10px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
-}
-
-.submit-button:hover {
-    background-color: #218838;
-}
-
-</style>
-<div class="edit-dosen-container">
-    <h1 class="title">{{ $title }}</h1>
-
-    @if(isset($error))
-        <div class="error-message">
-            {{ $error }}
-        </div>
-    @endif
-
-    <form method="POST" action="{{ route('admin.artikel.update', ['id' => $artikelData['id']]) }}" enctype="multipart/form-data" class="edit-dosen-form">
-        @csrf
-        <input type="hidden" name="id" value="{{ $artikelData['id'] }}">
-
-        <div class="form-group">
-            <label for="nama">Judul Artikel :</label>
-            <input type="text" name="nama" id="nama" value="{{ $artikelData['nama'] }}" required>
-        </div>
-
-        <div class="form-group">
-            <label>Gambar Saat Ini</label>
-            @if($artikelData['thumbnail'])
-                <img src="{{ asset('storage/' . $artikelData['thumbnail']) }}" alt="Gambar Dosen" class="gambar-preview">
-            @else
-                <p><em>Belum ada gambar</em></p>
-            @endif
-        </div>
-
-        <div class="form-group">
-            <label for="image">Ganti Gambar (jika perlu)</label>
-            <input type="file" name="image" id="image" accept="image/*">
-        </div>
-
-        <div class="form-group">
-            <label for="summernote">Konten Profil Lengkap</label>
-            <textarea id="summernote" name="content">{!! $artikelData['content'] !!}</textarea>
-        </div>
-
-        <div class="form-group">
-            <button type="submit" class="submit-button">Update Dosen</button>
-        </div>
-    </form>
+            {{-- Tombol Submit --}}
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary">Update Artikel</button>
+            </div>
+        </form>
+    </div>
 </div>
-@include('partials.summernote')
+
+@endsection

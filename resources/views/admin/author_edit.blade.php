@@ -1,83 +1,47 @@
-<style>
-    form {
-  max-width: 600px;
-  margin: 30px auto;
-  background: #fff;
-  padding: 25px 30px;
-  border-radius: 12px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-}
+@extends('layouts.admin')
 
-h1 {
-  text-align: center;
-  font-size: 26px;
-  margin-bottom: 20px;
-}
+@section('content')
+<h3 class="mx-3 mb-3 mt-3">{{ $title }}</h3>
 
-.form-group {
-  margin-bottom: 15px;
-}
+<div class="card shadow-sm mx-3 mb-3">
+    <div class="card-body">
 
-.form-group label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 6px;
-  color: #333;
-}
+        {{-- Notifikasi Error --}}
+        @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
 
-.form-group input[type="text"],
-.form-group input[type="email"],
-.form-group input[type="password"] {
-  width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 15px;
-}
+        {{-- Form Edit Author --}}
+        <form action="{{ route('admin.author.update', ['id' => $author['id']]) }}" method="POST">
+            @csrf
+            <input type="hidden" name="id" value="{{ $author['id'] }}">
 
-.btn-success {
-  background-color: #28a745;
-  color: white;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
-}
+            {{-- Nama --}}
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="name" name="name" value="{{ $author['name'] }}" placeholder="Nama Author" required>
+                <label for="name">Nama Author</label>
+            </div>
 
-.btn-success:hover {
-  background-color: #218838;
-}
+            {{-- Email --}}
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="email" name="email" value="{{ $author['email'] }}" placeholder="Email" required>
+                <label for="email">Email</label>
+            </div>
 
-</style>
-<h1>{{ $title }}</h1>
+            {{-- Password --}}
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="password" name="password" placeholder="Kosongkan jika tidak ingin diubah">
+                <label for="password">Password (kosongkan jika tidak diubah)</label>
+            </div>
 
-@if(isset($error))
-    <div style="color: red; margin-bottom: 10px;">
-        {{ $error }}
+            {{-- Tombol Submit --}}
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary">Update Author</button>
+            </div>
+        </form>
+
     </div>
-@endif
-
-<form action="{{ route('admin.author.update', ['id' => $author['id']]) }}" method="POST">
-    @csrf
-    <input type="hidden" name="id" value="{{ $author['id'] }}">
-
-    <div class="form-group">
-        <label>Name</label>
-        <input type="text" name="name" value="{{ $author['name'] }}" required>
-    </div>
-
-    <div class="form-group">
-        <label>Email</label>
-        <input type="email" name="email" value="{{ $author['email'] }}" required>
-    </div>
-
-    <div class="form-group">
-        <label>Password (Leave blank if not changing)</label>
-        <input type="password" name="password">
-    </div>
-
-    <div style="margin-top: 15px;">
-        <button type="submit" class="btn btn-success">Update Author</button>
-    </div>
-</form>
+</div>
+@endsection
