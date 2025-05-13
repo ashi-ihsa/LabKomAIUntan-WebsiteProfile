@@ -17,7 +17,8 @@ class ArtikelAuthorController extends Controller
 
     public function index(Request $request): Response
     {
-        $artikelData = $this->artikelService->getArtikel();
+        $search = $request->input('search');
+        $artikelData = $this->artikelService->getArtikel($search);
         return response()->view('author.artikel', [
             'title' => 'Manajemen Artikel',
             'artikelData' => $artikelData
