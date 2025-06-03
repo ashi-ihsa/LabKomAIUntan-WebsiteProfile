@@ -19,6 +19,16 @@
                 <input class="form-control" type="file" id="image" name="image" accept="image/*" required>
             </div>
 
+            <div class="form-floating mb-3">
+                <input type="date" class="form-control" id="tanggal" name="tanggal" placeholder="Tanggal Agenda" required>
+                <label for="tanggal">Tanggal Agenda</label>
+            </div>
+
+            <div class="form-floating mb-4">
+                <textarea class="form-control" placeholder="Deskripsi singkat" id="deskripsi" name="deskripsi" style="height: 100px" required></textarea>
+                <label for="deskripsi">Deskripsi Singkat</label>
+            </div>
+
             {{-- Tombol --}}
             <div class="d-flex justify-content-end">
                 <button type="submit" class="btn btn-primary">Tambah Agenda</button>
