@@ -70,9 +70,10 @@ class WebsiteProfileController extends Controller
 
         if ($search !== '') {
             $listPublikasi = $listPublikasi->filter(function ($item) use ($search) {
-                return str_contains(strtolower($item['nama']),        $search) ||
-                    str_contains(strtolower($item['dosen_nama']),  $search) ||
-                    str_contains((string) $item['tahun'],          $search);
+                return str_contains(strtolower($item['nama']),$search) ||
+                    str_contains(strtolower($item['dosen_nama']),$search) ||
+                    str_contains((string) $item['tahun'],$search) ||
+                    str_contains(strtolower($item['deskripsi'] ?? ''), $search);
             });
         }
 

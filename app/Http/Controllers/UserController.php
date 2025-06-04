@@ -34,7 +34,7 @@ class UserController extends Controller
         if (empty($user) || empty($password) || empty($role)) {
             return response()->view("user.login", [
                 "title" => "Login",
-                "error" => "User, Password, and Role are required"
+                "error" => "Email, Password, and Role are required"
             ]);
         }
 
@@ -51,7 +51,7 @@ class UserController extends Controller
 
         return response()->view("user.login", [
             "title" => "Login",
-            "error" => "Invalid User, Password, or Role"
+            "error" => "Invalid Email, Password, or Role"
         ]);
     }
 

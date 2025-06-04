@@ -63,7 +63,7 @@
             name="search"
             value="{{ request('search') }}"
             class="form-control"
-            placeholder="Cari berdasarkan judul atau dosen">
+            placeholder="Cari berdasarkan judul, dosen, tahun, keyword">
     </form>
 
     {{-- Grid Publikasi --}}

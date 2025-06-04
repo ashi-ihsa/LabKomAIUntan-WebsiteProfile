@@ -66,8 +66,10 @@ class PublikasiServiceImpl implements PublikasiService
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('nama', 'like', '%' . $search . '%')
+                ->orWhere('deskripsi', 'like', '%' . $search . '%')          // cari berdasarkan deskripsi
+                ->orWhere('tahun', 'like', '%' . $search . '%')              // cari berdasarkan tahun
                 ->orWhereHas('dosen', function ($dq) use ($search) {
-                    $dq->where('nama', 'like', '%' . $search . '%');
+                    $dq->where('nama', 'like', '%' . $search . '%');         // cari berdasarkan nama dosen
                 });
             });
         }
